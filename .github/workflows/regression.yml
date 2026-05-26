@@ -3,31 +3,41 @@ name: Regression Test Suite
 on:
   push:
     branches: [main, develop]
+
   pull_request:
     branches: [main]
 
 jobs:
+
   python-tests:
     runs-on: ubuntu-latest
+
+    env:
+      GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
-      - name: Install dependencies
-        run: pip install -r requirements.txt
+      - name: Install Python dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
 
       - name: Run Python regression tests with coverage
         run: |
-          pytest tests/python/ --cov=tests/python \
+          pytest tests/python/ \
+            --cov=tests/python \
             --cov-report=term-missing \
             --cov-report=xml \
             -v
 
-      - name: Upload coverage report
+      - name: Upload Python coverage report
         uses: actions/upload-artifact@v4
         with:
           name: python-coverage
@@ -35,15 +45,17 @@ jobs:
 
   typescript-tests:
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
 
-      - name: Set up Node
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "20"
 
-      - name: Install dependencies
+      - name: Install Node dependencies
         run: npm install
 
       - name: Run TypeScript regression tests
@@ -51,17 +63,24 @@ jobs:
 
   gap-report:
     runs-on: ubuntu-latest
-    needs: [python-tests, typescript-tests]
+
+    needs:
+      - python-tests
+      - typescript-tests
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
-      - name: Install dependencies
-        run: pip install -r requirements.txt
+      - name: Install Python dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
 
       - name: Print open coverage gaps
         run: python scripts/coverage_gap_tracker.py open
