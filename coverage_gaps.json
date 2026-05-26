@@ -1,0 +1,28 @@
+{
+  "gaps": [
+    {
+      "id": "GAP-001",
+      "feature": "User Authentication",
+      "area": "Session expiry after 24 hours",
+      "status": "closed",
+      "priority": "high",
+      "notes": "Needs time-mocking to test properly"
+    },
+    {
+      "id": "GAP-002",
+      "feature": "User Authentication",
+      "area": "Token invalidation on logout",
+      "status": "open",
+      "priority": "medium",
+      "notes": "Requires integration test with real token store"
+    },
+    {
+      "id": "GAP-003",
+      "feature": "Payments",
+      "area": "Refund flow",
+      "status": "open",
+      "priority": "high",
+      "notes": "Not yet automated"
+    }
+  ]
+}
