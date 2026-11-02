@@ -124,7 +124,7 @@ python scripts/coverage_gap_tracker.py report
 
 ### 5. CI/CD Runs Automatically
 
-Every push to `main` or `develop` triggers GitHub Actions, which:
+Every push to `master` (and every pull request to it) triggers GitHub Actions, which:
 - Runs Python tests with coverage report
 - Runs TypeScript tests with coverage
 - Prints all open coverage gaps as a pipeline summary
@@ -133,9 +133,9 @@ Every push to `main` or `develop` triggers GitHub Actions, which:
 # .github/workflows/regression.yml
 on:
   push:
-    branches: [main, develop]
+    branches: [master]
   pull_request:
-    branches: [main]
+    branches: [master]
 ```
 
 ---
