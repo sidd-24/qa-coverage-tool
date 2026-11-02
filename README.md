@@ -26,7 +26,7 @@ The goal was not to replace human judgment in testing, but to eliminate the repe
 
 | Layer | Technology |
 |---|---|
-| AI Test Generation | Groq API (`llama-3.3-70b-versatile`) |
+| AI Test Generation | Groq API (`openai/gpt-oss-120b`, configurable with `GROQ_MODEL`) |
 | Python Testing | `pytest`, `pytest-cov` |
 | TypeScript Testing | `Jest`, `ts-jest` |
 | Coverage Analysis | `pytest --cov`, Jest `--coverage` |

@@ -31,9 +31,10 @@ For TypeScript, use Jest with mock functions.
 """
 
     response = client.chat.completions.create(
-        model="llama-3.3-70b-versatile",
+        model=os.getenv("GROQ_MODEL", "openai/gpt-oss-120b"),
         messages=[{"role": "user", "content": prompt}],
-        max_tokens=2000
+        # gpt-oss reasons before answering and those tokens count towards the limit
+        max_tokens=8000
     )
     
     return response.choices[0].message.content
